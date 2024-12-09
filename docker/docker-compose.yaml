@@ -159,7 +159,7 @@ services:
     volumes:
       # Mount the storage directory to the container, for storing user files.
       - type: bind
-        source: ./volumes/app/storage
+        source: ./docker/volumes/app/storage
         target: /app/api/storage
         is_directory: true
     networks:
@@ -182,7 +182,7 @@ services:
     volumes:
       # Mount the storage directory to the container, for storing user files.
       - type: bind
-        source: ./volumes/app/storage
+        source: ./docker/volumes/app/storage
         target: /app/api/storage
         is_directory: true
     networks:
@@ -218,7 +218,7 @@ services:
                -c 'effective_cache_size=${POSTGRES_EFFECTIVE_CACHE_SIZE:-4096MB}'
     volumes:
       - type: bind
-        source: ./volumes/db/data
+        source: ./docker/volumes/db/data
         target: /var/lib/postgresql/data
         is_directory: true
     healthcheck:
@@ -236,7 +236,7 @@ services:
     volumes:
       # Mount the redis data directory to the container.
       - type: bind
-        source: ./volumes/redis/data
+        source: ./docker/volumes/redis/data
         target: /data
         is_directory: true
     # Set the redis password when startup redis server.
@@ -261,7 +261,7 @@ services:
       SANDBOX_PORT: ${SANDBOX_PORT:-8194}
     volumes:
       - type: bind
-        source: ./volumes/sandbox/dependencies
+        source: ./docker/volumes/sandbox/dependencies
         target: /dependencies
         is_directory: true
     healthcheck:
@@ -277,10 +277,10 @@ services:
     restart: always
     volumes:
       - type: bind
-        source: ./ssrf_proxy/squid.conf.template
+        source: ./docker/ssrf_proxy/squid.conf.template
         target: /etc/squid/squid.conf.template
       - type: bind
-        source: ./ssrf_proxy/docker-entrypoint.sh
+        source: ./docker/ssrf_proxy/docker-entrypoint.sh
         target: docker-entrypoint-mount.sh
     entrypoint:
       [
@@ -306,20 +306,20 @@ services:
     restart: always
     volumes:
       - type: bind
-        source: ./nginx/nginx.conf.template
+        source: ./docker/nginx/nginx.conf.template
         target: /etc/nginx/nginx.conf.template
       - type: bind
-        source: ./nginx/proxy.conf.template
+        source: ./docker/nginx/proxy.conf.template
         target: /etc/nginx/proxy.conf.template
       - type: bind
-        source: ./nginx/https.conf.template
+        source: ./docker/nginx/https.conf.template
         target: /etc/nginx/https.conf.template
       - type: bind
-        source: ./nginx/conf.d
+        source: ./docker/nginx/conf.d
         target: /etc/nginx/conf.d
         is_directory: true
       - type: bind
-        source: ./nginx/docker-entrypoint.sh
+        source: ./docker/nginx/docker-entrypoint.sh
         target: /docker-entrypoint-mount.sh
     entrypoint:
       [
@@ -361,7 +361,7 @@ services:
     volumes:
       # Mount the Weaviate data directory to the con tainer.
       - type: bind
-        source: ./volumes/weaviate
+        source: ./docker/volumes/weaviate
         target: /var/lib/weaviate
         is_directory: true
     environment:
