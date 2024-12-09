@@ -281,7 +281,7 @@ services:
         target: /etc/squid/squid.conf.template
       - type: bind
         source: ./ssrf_proxy/docker-entrypoint.sh
-        target: docker-entrypoint-mount.sh
+        target: /docker-entrypoint-mount.sh
     entrypoint:
       [
         'sh',
